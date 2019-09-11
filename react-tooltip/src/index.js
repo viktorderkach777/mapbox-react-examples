@@ -41,9 +41,31 @@ class Application extends React.Component {
     
     map.on('mousemove', (e) => {
       const features = map.queryRenderedFeatures(e.point);
-      tooltip.setLngLat(e.lngLat);
-      map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-      this.setTooltip(features);
+      // tooltip.setLngLat(e.lngLat);
+      // map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+      // this.setTooltip(features);
+
+      if (typeof features[0] !== typeof undefined) {
+        //let cityName = features[0].properties.name_en;
+        let placeType = features[0].properties.type;
+  
+  
+        if (placeType === "city" || placeType === "town" || placeType === "village") {
+          map.getCanvas().style.cursor = 'crosshair';
+          placeType += " ";
+          tooltip.setLngLat(e.lngLat);          
+          this.setTooltip(features);
+        }
+        else {
+          map.getCanvas().style.cursor = 'grab';
+          placeType = "";
+          this.setTooltip(features);
+        }
+  console.log("placeType", placeType);
+  console.log("cityname", features[0].properties.name_en);
+        // $('#weathermap').attr('data-placetype', placeType);
+        // $('#weathermap').attr('data-cityname', features[0].properties.name_en);
+      }
     });
   }
 

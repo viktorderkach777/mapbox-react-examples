@@ -11,6 +11,9 @@ export default class Tooltip extends React.Component {
     const { features } = this.props;
 
     const renderFeature = (feature, i) => {
+      if(feature === null){
+        return null;
+      }
       return (
         <div key={i}>
           <strong className='mr3'>{feature.layer['source-layer']}:</strong>
