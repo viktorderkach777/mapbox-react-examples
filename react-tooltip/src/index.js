@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
-import Tooltip from './components/tooltip'
+//import Tooltip from './components/tooltip';
+import mapMarkerIcon from './marker-icon.svg';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
@@ -12,7 +13,9 @@ class Application extends React.Component {
     this.state = {
       lng: -79.38,
       lat: 43.65,
-      zoom: 12.5
+      zoom: 7.5,
+      image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMi0QnVvJROe-0oXg0a29J9mJLk2c9JMnuC3F893xeKMa2R_ou",
+      name: 'Hotel Name'
     };
   }
 
@@ -23,34 +26,55 @@ class Application extends React.Component {
   //   </div>, placeholder);  
   //const markerRef = new mapboxgl.Marker(marker).setLngLat(position).addTo(map);
 
-  tooltipContainer;
+  //tooltipContainer;
   markerContainer;
+  markerRef = null;
 
-  setTooltip(features) {
-    if (features === null) {
-      this.tooltipContainer.innerHTML = '';
-      return;
-    }
+  // setTooltip(features) {
+  //   if (features === null) {
+  //     this.tooltipContainer.innerHTML = '';
+  //     return;
+  //   }
 
-    if (features.length) {
-      ReactDOM.render(
-        React.createElement(
-          Tooltip, {
-            features
-          }
-        ),
-        this.tooltipContainer
-      );
-    } else {
-      this.tooltipContainer.innerHTML = '';
-    }
-  }
+  //   if (features.length) {
+  //     ReactDOM.render(
+  //       React.createElement(
+  //         Tooltip, {
+  //         features
+  //       }
+  //       ),
+  //       this.tooltipContainer
+  //     );
+  //   } else {
+  //     this.tooltipContainer.innerHTML = '';
+  //   }
+  // }
+
+
+  // setTooltip(features) {
+  //   if (features === null) {
+  //     this.markerContainer.innerHTML = '';
+  //     return;
+  //   }
+
+  //   if (features.length) {
+  //     ReactDOM.render(
+  //       <div className='mapboxgl-marker'>
+  //         {/* <marker /> */}
+  //         {/* <h1>Hello</h1> */}
+  //         <img alt="marker" src={mapMarkerIcon} height="45px" width="25px" />
+  //       </div>, this.markerContainer);
+  //   } else {
+  //     this.markerContainer.innerHTML = '';
+  //   }
+  // }
+
 
   componentDidMount() {
-    const { lng, lat, zoom } = this.state;
+    const { lng, lat, zoom, image, name } = this.state;
 
     // Container to put React generated content in.
-    this.tooltipContainer = document.createElement('div');
+    //this.tooltipContainer = document.createElement('div');
     this.markerContainer = document.createElement('div');
 
     const map = new mapboxgl.Map({
@@ -59,12 +83,21 @@ class Application extends React.Component {
       center: [lng, lat],
       zoom
     });
+// lng: -79.38,
+//lat: 43.65,
+    map.flyTo({
+      center: [
+        26.25,
+        50.61]
+    });
+
 
     const marker = ReactDOM.render(
       <div className='mapboxgl-marker'>
         {/* <marker /> */}
-        <h1>Hello</h1>
-      </div>,  this.markerContainer);
+        {/* <h1>Hello</h1> */}
+        <img alt="marker" src={mapMarkerIcon} height="45px" width="25px" />
+      </div>, this.markerContainer);
 
     // const marker =  new mapboxgl.Marker(this.markerContainer,{
     //   color: 'blue',
@@ -76,25 +109,71 @@ class Application extends React.Component {
     //   //.setPopup(popup)
     //   .addTo(map);
 
-    const tooltip = new mapboxgl.Marker(this.tooltipContainer, {
-      offset: [-120, 0]
-    })
-      .setLngLat([0, 0])
-      .addTo(map);
+    // const tooltip = new mapboxgl.Marker(this.tooltipContainer, {
+    //   offset: [-120, 0]
+    // })
+    //   .setLngLat([0, 0])
+    //   .addTo(map);
 
     map.on('mousedown', function (e) {
       console.log("mousedown", e);
       //console.log("e.originalEvent.view.which", e.originalEvent);
       console.log("e.originalEvent.which", e.originalEvent.which);
+      // if (e.originalEvent.which === 2) {
+      //   this.markerContainer.innerHTML = '';
+      //   return;
+      // }
+      let popup = null;
+
       if (e.originalEvent.which === 3) {
 
         const coordX = e.lngLat.lng;
         const coordY = e.lngLat.lat;
         console.log("coordY", coordX, coordY);
-       const markerRef = new mapboxgl.Marker(marker).setLngLat([coordX, coordY]).addTo(map);
+
+        if(this.markerRef != null){
+          // map.remove(popup);
+          this.markerRef.remove();
+          this.markerRef = null;
+        }
+
+        popup = new mapboxgl.Popup()
+          .setLngLat([coordX, coordY])
+          .setHTML(
+            '<div>'+ 
+            '<h2 style="text-align: center">' + name +'</h2>'+
+            '<img alt="marker" + src="'+image+'" height="150px" width="auto" />'
+            +'</div>'
+          )
+          .addTo(map);
+
+        this.markerRef = new mapboxgl.Marker(marker, {
+          draggable: true,
+        })
+          .setLngLat([coordX, coordY])
+          .setPopup(popup)
+          .addTo(map);
+        console.log("markerRef", this.markerRef);
+
+        //   this.marker = new MapboxGl.Marker({
+        //     draggable: this.props.draggable,
+        //     element: this.refs.wrapper
+        //   })
+        //     .setLngLat([this.props.coordinate.lon, this.props.coordinate.lat])
+        //     .addTo(map);
 
       }
     });
+
+    // if(this.markerRef!=null){
+    //   this.markerRef.on('drag', () => {
+    //     console.log("drag");
+    //     // const lngLat = this.marker.getLngLat();
+    //     // this.props.onDrag && this.props.onDrag(lngLat);
+    //   });
+    // }
+
+
 
     map.on('mousemove', (e) => {
       const features = map.queryRenderedFeatures(e.point);
@@ -119,8 +198,8 @@ class Application extends React.Component {
         if (placeType === "city" || placeType === "town" || placeType === "village") {
           map.getCanvas().style.cursor = 'crosshair';
           placeType += " ";
-          tooltip.setLngLat(e.lngLat);
-          this.setTooltip(features);
+          //tooltip.setLngLat(e.lngLat);
+          // this.setTooltip(features);
           console.log("placeType", placeType);
           console.log("cityname", features[0].properties.name_en);
           console.log("e.lngLat", e.lngLat.lng, e.lngLat.lat);
@@ -129,7 +208,7 @@ class Application extends React.Component {
         else {
           map.getCanvas().style.cursor = 'grab';
           placeType = "";
-          this.setTooltip(null);
+          //this.setTooltip(null);
         }
 
       }
@@ -139,7 +218,7 @@ class Application extends React.Component {
   render() {
     const { lng, lat, zoom } = this.state;
     return (
-      <div>
+      <div style={{position:"absolute", top:"100px", left:"100px", width:"50%", height:"50%", borderRadius:"10px"}}>
         <div className="inline-block absolute top left mt12 ml12 bg-darken75 color-white z1 py6 px12 round-full txt-s txt-bold">
           <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
         </div>
