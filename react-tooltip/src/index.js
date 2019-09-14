@@ -83,6 +83,8 @@ class Application extends React.Component {
       center: [lng, lat],
       zoom
     });
+
+    map.resize();
 // lng: -79.38,
 //lat: 43.65,
     map.flyTo({
@@ -91,7 +93,7 @@ class Application extends React.Component {
         50.61]
     });
 
-
+    map.resize();
     const marker = ReactDOM.render(
       <div className='mapboxgl-marker'>
         {/* <marker /> */}
