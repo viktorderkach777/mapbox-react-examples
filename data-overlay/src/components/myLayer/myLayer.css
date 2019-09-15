@@ -84,7 +84,8 @@
   .listings .item .title small { font-weight: 400; }
   
   .listings .item.active .title, 
-  .listings .item .title:hover { color: mediumvioletred; }
+  .listings .item .title:hover,
+  .item .title:hover { color: mediumvioletred; }
   
   .listings .item.active {
     background-color: #f8f8f8;
@@ -102,7 +103,7 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    background: blue;
+    background: deepskyblue;
     border-radius: 0;
   }
   
@@ -144,12 +145,19 @@
   }
   
   .mapboxgl-popup-content h4 {
+    background: deepskyblue;
+    color: #fff;
     margin: 0;
     display: block;
-    padding: 10px;
+    padding: 10px;   
     font-weight: 400;
     text-align: center;
   }
+
+   img {
+    height: 150px;
+    width: auto;
+  }  
   
   .mapboxgl-popup-content div {
     padding: 10px;
@@ -172,7 +180,7 @@
     cursor: pointer;    
     height: 48px;
     width: 48px;   
-    background-image: url(./hotel2.ico);
+    background-image: url(./hotel.ico);
     background-color: rgba(0, 0, 0, 0);
   }
 
@@ -181,10 +189,9 @@
   }
 
 
-
-
-
-
+  .checked {
+    color: orange;
+  }
 
 
 /* #body {

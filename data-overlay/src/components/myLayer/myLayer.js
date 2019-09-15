@@ -23,7 +23,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmb
 // Rate=5.0,
 // Price=550
 
-const stores = {
+const hotels = {
   "type": "FeatureCollection",
   "features": [
     {
@@ -36,14 +36,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(202) 234-7336",
-        "phone": "2022347336",
-        "address": "1471 P St NW",
-        "city": "Washington DC",
-        "country": "United States",
-        "crossStreet": "at 15th St NW",
-        "postalCode": "20005",
-        "state": "D.C."
+        "country": "Egypt",
+        "region": "Hurgada",
+        "name": "HotelName 1",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMi0QnVvJROe-0oXg0a29J9mJLk2c9JMnuC3F893xeKMa2R_ou",
+        "rate": "3"
       }
     },
     {
@@ -56,14 +53,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(202) 507-8357",
-        "phone": "2025078357",
-        "address": "2221 I St NW",
-        "city": "Washington DC",
-        "country": "United States",
-        "crossStreet": "at 22nd St NW",
-        "postalCode": "20037",
-        "state": "D.C."
+        "country": "Egypt",
+        "region": "Sharm El Sheikh",
+        "name": "HotelName 2",
+        "image": "https://www.vegas.com/media/x5oIDNm-pMQ3bqcCL.jpg.pagespeed.ic.i5kgYjv-o6.jpg",
+        "rate": "4"
       }
     },
     {
@@ -76,14 +70,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(202) 387-9338",
-        "phone": "2023879338",
-        "address": "1512 Connecticut Ave NW",
-        "city": "Washington DC",
-        "country": "United States",
-        "crossStreet": "at Dupont Circle",
-        "postalCode": "20036",
-        "state": "D.C."
+        "country": "Egypt",
+        "region": "Coral Bay",
+        "name": "HotelName 3",
+        "image": "https://media-cdn.tripadvisor.com/media/photo-s/10/00/09/a8/swimming-pool.jpg",
+        "rate": "5"
       }
     },
     {
@@ -96,14 +87,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(202) 337-9338",
-        "phone": "2023379338",
-        "address": "3333 M St NW",
-        "city": "Washington DC",
-        "country": "United States",
-        "crossStreet": "at 34th St NW",
-        "postalCode": "20007",
-        "state": "D.C."
+        "country": "Turkey",
+        "region": "Antalya",
+        "name": "HotelName 4",
+        "image": "https://media-cdn.tripadvisor.com/media/photo-s/08/b1/b4/fb/aria-hotel-budapest.jpg",
+        "rate": "3"
       }
     },
     {
@@ -116,14 +104,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(202) 547-9338",
-        "phone": "2025479338",
-        "address": "221 Pennsylvania Ave SE",
-        "city": "Washington DC",
-        "country": "United States",
-        "crossStreet": "btwn 2nd & 3rd Sts. SE",
-        "postalCode": "20003",
-        "state": "D.C."
+        "country": "Turkey",
+        "region": "Alanya",
+        "name": "HotelName 5",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMi0QnVvJROe-0oXg0a29J9mJLk2c9JMnuC3F893xeKMa2R_ou",
+        "rate": "4"
       }
     },
     {
@@ -136,11 +121,11 @@ const stores = {
         ]
       },
       "properties": {
-        "address": "8204 Baltimore Ave",
-        "city": "College Park",
-        "country": "United States",
-        "postalCode": "20740",
-        "state": "MD"
+        "country": "Turkey",
+        "region": "Kemer",
+        "name": "HotelName 6",
+        "image": "https://thumbnails.trvl-media.com/AsIll6nJdWeO_tyD_70wa-_jGVw=/467x263/images.trvl-media.com/hotels/6000000/5970000/5963300/5963292/98e1e55b_b.jpg",
+        "rate": "5"
       }
     },
     {
@@ -153,14 +138,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(301) 654-7336",
-        "phone": "3016547336",
-        "address": "4831 Bethesda Ave",
-        "cc": "US",
-        "city": "Bethesda",
-        "country": "United States",
-        "postalCode": "20814",
-        "state": "MD"
+        "country": "Greece",
+        "region": "Crete",
+        "name": "HotelName 7",
+        "image": "https://www.sbhfue.com/en/dms/multiHotel-SBH-Hotels-Resorts/los-hotel/costa-calma-beach-sbh-hotels.jpg",
+        "rate": "3"
       }
     },
     {
@@ -173,14 +155,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(571) 203-0082",
-        "phone": "5712030082",
-        "address": "11935 Democracy Dr",
-        "city": "Reston",
-        "country": "United States",
-        "crossStreet": "btw Explorer & Library",
-        "postalCode": "20190",
-        "state": "VA"
+        "country": "Greece",
+        "region": "Zakintos",
+        "name": "HotelName 8",
+        "image": "https://pix10.agoda.net/hotelImages/237/237219/237219_16061614410043650820.jpg?s=312x235&ar=16x9",
+        "rate": "4"
       }
     },
     {
@@ -193,14 +172,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(703) 522-2016",
-        "phone": "7035222016",
-        "address": "4075 Wilson Blvd",
-        "city": "Arlington",
-        "country": "United States",
-        "crossStreet": "at N Randolph St.",
-        "postalCode": "22203",
-        "state": "VA"
+        "country": "Greece",
+        "region": "Rhodes",
+        "name": "HotelName 9",
+        "image": "https://imgcy.trivago.com/c_fill,d_dummy.jpeg,f_auto,h_162,q_auto,w_300/itemimages/67/36/67361_v5.jpeg",
+        "rate": "5"
       }
     },
     {
@@ -213,13 +189,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(610) 642-9400",
-        "phone": "6106429400",
-        "address": "68 Coulter Ave",
-        "city": "Ardmore",
-        "country": "United States",
-        "postalCode": "19003",
-        "state": "PA"
+        "country": "Ukraine",
+        "region": "Odesa",
+        "name": "HotelName 10",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMi0QnVvJROe-0oXg0a29J9mJLk2c9JMnuC3F893xeKMa2R_ou",
+        "rate": "3"
       }
     },
     {
@@ -232,13 +206,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(215) 386-1365",
-        "phone": "2153861365",
-        "address": "3925 Walnut St",
-        "city": "Philadelphia",
-        "country": "United States",
-        "postalCode": "19104",
-        "state": "PA"
+        "country": "Ukraine",
+        "region": "Zatoka",
+        "name": "HotelName 11",
+        "image": "https://s3.amazonaws.com/busites_www/mville2017/pages/meta/1/1/margville_stay_costa_rica_v03_1554137853.jpg",
+        "rate": "4"
       }
     },
     {
@@ -251,14 +223,11 @@ const stores = {
         ]
       },
       "properties": {
-        "phoneFormatted": "(202) 331-3355",
-        "phone": "2023313355",
-        "address": "1901 L St. NW",
-        "city": "Washington DC",
-        "country": "United States",
-        "crossStreet": "at 19th St",
-        "postalCode": "20036",
-        "state": "D.C."
+        "country": "Ukraine",
+        "region": "Kyrylovka",
+        "name": "HotelName 12",
+        "image": "https://zone1-ibizaspotlightsl.netdna-ssl.com/sites/default/files/styles/generic_third_width/public/accommodation-images/132710/coupon-1543323436.jpg?itok=f0TOcese",
+        "rate": "5"
       }
     }
   ]
@@ -270,7 +239,26 @@ class MyLayer extends React.Component {
   state = {
     active: null,
     popup: null
-  };  
+  };
+
+  componentDidMount() {
+    this.map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: 'mapbox://styles/mapbox/streets-v10',
+      //center: [-77.034084, 38.909671],
+      center: hotels.features[0].geometry.coordinates,
+      zoom: 14
+    });
+
+    this.map.on('load', () => {
+      this.map.addSource('places', {
+        type: 'geojson',
+        data: hotels
+      });
+
+      this.createAllMarkers();
+    });
+  }
 
   createMarker(index) {
     var el = document.createElement('div');
@@ -278,39 +266,21 @@ class MyLayer extends React.Component {
     // Add a class called 'marker' to each div
     el.className = 'marker';
 
-    el.onclick= () => this.linkOrMarkerClick(stores.features[index], index);
-   
+    el.onclick = () => this.linkOrMarkerClick(hotels.features[index], index);
+
     // By default the image for your custom marker will be anchored
     // by its center. Adjust the position accordingly
     // Create the custom markers, set their position, and add to map
     new mapboxgl.Marker(el, { offset: [17, 0] })
-      .setLngLat(stores.features[index].geometry.coordinates)
+      .setLngLat(hotels.features[index].geometry.coordinates)
       .addTo(this.map);
   }
 
   createAllMarkers = () => {
-    const res = (stores.features.map((element, index) => {
+    const res = (hotels.features.map((element, index) => {
       this.createMarker(index);
       return res;
     }))
-  }
-
-  componentDidMount() {
-    this.map = new mapboxgl.Map({
-      container: this.mapContainer,
-      style: 'mapbox://styles/mapbox/streets-v10',
-      center: [-77.034084, 38.909671],
-      zoom: 14
-    });    
-
-    this.map.on('load', () => {
-      this.map.addSource('places', {
-        type: 'geojson',
-        data: stores
-      });
-
-      this.createAllMarkers();
-    });
   }
 
   flyToMarker(center, zoom) {
@@ -320,7 +290,96 @@ class MyLayer extends React.Component {
     });
   }
 
-   linkOrMarkerClick = (element, index) => {
+  setStars(stars) { 
+    let nstars = parseInt(stars, 10);
+
+    let text = '';
+            for (let i = 0; i < 5; i++) {
+                if (i <= nstars - 1) {
+                    text = text + '<span class="fa fa-star checked"></span>';
+                }
+                else {
+                    text = text + '<span class="fa fa-star"></span>';
+                }
+            }
+            return text;
+
+    // switch (nstars) {
+    //   case 0:
+    //     return (
+    //       <div>
+    //         <span className="fa fa-star"></span>
+    //         <span className="fa fa-star"></span>
+    //         <span className="fa fa-star"></span>
+    //         <span className="fa fa-star"></span>
+    //         <span className="fa fa-star"></span>
+    //       </div>
+    //     )
+    //   case 1:
+    //       return (
+    //         <div>
+    //           <span className="fa fa-star checked"></span>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //         </div>
+    //       )
+    //   case 2:
+    //       return (
+    //         <div>
+    //           <span className="fa fa-star checked"></span>
+    //           <span className="fa fa-star checked"></span>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //         </div>
+    //       )
+    //   case 3:
+    //       return (
+    //       <div>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star"></span>
+    //       <span className="fa fa-star"></span>
+    //     </div>
+    //       )
+    //   case 4:
+    //       return (
+    //       <div>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star"></span>
+    //     </div>
+    //       )
+    //   case 5:
+    //       return (
+    //       <div>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //       <span className="fa fa-star checked"></span>
+    //     </div>
+    //       )
+    //   default:
+    //       return (
+    //         <div>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //           <span className="fa fa-star"></span>
+    //         </div>
+    //       )
+    // }
+   
+  }
+
+  linkOrMarkerClick = (element, index) => {
 
     // 1. Fly to the point associated with the clicked link
     this.flyToMarker(element.geometry.coordinates, 15);
@@ -328,11 +387,17 @@ class MyLayer extends React.Component {
     // 2. Close all other popups and display popup for clicked store
     // Check if there is already a popup on the map and if so, remove it
     if (this.state.popup) this.state.popup.remove();
+// {this.setStars(prop.rate)}
+    const descript =
+      '<h3 >' + element.properties.name + '</h2>' +
+      '<img alt="marker" + src="' + element.properties.image + '" />' +
+      '<h4 style="padding-bottom: 0px;">' + this.setStars(element.properties.rate) + '</h4>'+
+      '<h4 style="padding-top: 0px;">' + element.properties.country + ', ' + element.properties.region + '</h4>';
 
+    //'<h3>Sweetgreen</h3>' +'<h4>' + element.properties.address + '</h4>'
     const popup = new mapboxgl.Popup({ closeOnClick: false, offset: [17, 0] })
       .setLngLat(element.geometry.coordinates)
-      .setHTML('<h3>Sweetgreen</h3>' +
-        '<h4>' + element.properties.address + '</h4>')
+      .setHTML(descript)
       .addTo(this.map);
 
     // 3. Highlight listing in sidebar (and remove highlight for all other listings)
@@ -342,24 +407,22 @@ class MyLayer extends React.Component {
     });
   };
 
-  render() { 
+  render() {
 
-    const arr = stores.features.map((element, index) => {
-      let currentFeature = element;
-     
+    const locations = hotels.features.map((element, index) => {
+
       // Shorten data.feature.properties to `prop` so we're not
       // writing this long form over and over again.
-      let prop = currentFeature.properties;       
+      const prop = element.properties;
 
-      let det = prop.city;
-      if (prop.phone) {
-        det += ' · ' + prop.phoneFormatted;
-      }
+      let det = prop.country + ', ' + prop.region;
+
 
       return (
         <div key={index} className={this.state.active === 'listing-' + index ? 'item active' : 'item'} id={'listing-' + index}>
-          <a tabIndex="0" className="title" onClick={() => this.linkOrMarkerClick(element, index)}>{prop.address}</a>
-          <div>{det}</div>
+          <a tabIndex="0" className="title" onClick={() => this.linkOrMarkerClick(element, index)}>{prop.name}</a>
+         
+          <div>{det}</div>         
         </div>
       )
     })
@@ -373,7 +436,7 @@ class MyLayer extends React.Component {
             <h1>Our locations</h1>
           </div>
           <div id='listings' className='listings'>
-            {arr}
+            {locations}
           </div>
         </div>
       </div>
