@@ -7,6 +7,22 @@ import './myLayer.css';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
+
+// Id=(++hotelId).ToString(),
+// Class=4,
+// RegionId="1",
+// Name="Royal Paradise Resort",
+// Description="Отель расположен в районе Хадаба курорта Шарм-Эль-Шейх на берегу Красного моря." +
+// " Был открыт в 1996 году. Реновации в отеле не было, только косметический поточный ремонт. " +
+// "Состоит из основного 2-этажного здания (без номеров) и комплекса 2-этажных корпусов. Коралловый" +
+// " пляж отеля граничит с уникальными коралловыми рифами. Рядом возле отеля находится развлекательный " +
+// "центр Alf Leila Wa Leila, а торговые ряды Il Merkato и Old Market порадуют любителей шопинга и местного" +
+// " колорита. Отель расположен в 22 км от международного аэропорта Шарм-эль-Шейх в районе Hadaba | Ras Um El" +
+// " Sid. Расстояние до Naama Bay: 7 км; Расстояние до Old Market (Старый Город): 4 км; Расстояние до Soho Square: 20 км.",
+// RoomsCount=286,
+// Rate=5.0,
+// Price=550
+
 const stores = {
   "type": "FeatureCollection",
   "features": [
