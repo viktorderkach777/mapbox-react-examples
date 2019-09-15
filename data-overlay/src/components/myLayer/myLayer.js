@@ -1,8 +1,10 @@
-import React from 'react'
-//import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css';
 //import data from './data.json'
-import './myLayer.css'
+import './myLayer.css';
+import mapMarkerIcon from './marker.png';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
@@ -282,22 +284,71 @@ const stores = {
 class MyLayer extends React.Component {
   map;
 
-  // constructor(props) {
-  //   super(props);
-  //   // this.state = {
-  //   //   active: options[0]
-  //   // };
-  // }
-
-  // componentDidUpdate() {
-  //   this.setFill();
-  // }
-
   state = {
     active: null,
     popup: null
   };
 
+  //markerContainer;
+  //markerRef = null;
+
+  // LinkClick;
+  // arr;
+
+  createMarker(lng, lat) {
+    let popup = null;
+
+    const coordX = lng;
+    const coordY = lat;
+    //console.log("coordY", coordX, coordY);
+
+    const markerContainer = document.createElement('div');
+    const marker = ReactDOM.render(
+      <div className='mapboxgl-marker' onClick={(e) => console.log("marker", e)}>
+        {/* <marker /> */}
+        {/* <h1>Hello</h1> */}
+        <img alt="marker" src={mapMarkerIcon} height="45px" width="25px" />
+      </div>, markerContainer);
+
+    const image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMi0QnVvJROe-0oXg0a29J9mJLk2c9JMnuC3F893xeKMa2R_ou";
+    const name = 'Hotel Name'
+
+    popup = new mapboxgl.Popup()
+      .setLngLat([coordX, coordY])
+      .setHTML(
+        '<div>' +
+        '<h2 style="text-align: center">' + name + '</h2>' +
+        '<img alt="marker" + src="' + image + '" height="150px" width="auto" />'
+        + '</div>'
+      )
+      .addTo(this.map);
+
+    new mapboxgl.Marker(marker, {
+      draggable: false,
+    })
+      .setLngLat([coordX, coordY])
+      .setPopup(popup)
+      .addTo(this.map);
+
+    //markerRef.togglePopup();
+    //console.log("markerRef", markerRef);
+
+    //   this.marker = new MapboxGl.Marker({
+    //     draggable: this.props.draggable,
+    //     element: this.refs.wrapper
+    //   })
+    //     .setLngLat([this.props.coordinate.lon, this.props.coordinate.lat])
+    //     .addTo(map);
+
+
+  }
+
+  load = () => {
+    const res = (stores.features.map((element) => {
+      this.createMarker(element.geometry.coordinates[0], element.geometry.coordinates[1]);
+      return res;
+    }))
+  }
 
   componentDidMount() {
     this.map = new mapboxgl.Map({
@@ -307,30 +358,46 @@ class MyLayer extends React.Component {
       zoom: 14
     });
 
-    this.map.on('load', (e) => {
-      // Add the data to your map as a layer
-      this.map.addLayer({
-        id: 'locations',
-        type: 'symbol',
-        // Add a GeoJSON source containing place coordinates and information.
-        source: {
-          type: 'geojson',
-          data: stores
-        },
-        layout: {
-          'icon-image': 'restaurant-15',
-          'icon-allow-overlap': true,
-        }
+    // const load = ()=>{
+    //   return(stores.features.map((element) => {
+    //   this.createMarker(element.geometry.coordinates[0], element.geometry.coordinates[1]);
+    // }))}
+
+    this.map.on('load', () => {
+
+      // Add the data to your map as a layer icon-hotel
+      // this.map.addLayer({
+      //   id: 'locations',
+      //   type: 'symbol',
+      //   // Add a GeoJSON source containing place coordinates and information.
+      //   source: {
+      //     type: 'geojson',
+      //     data: stores
+      //   },
+      //   layout: {
+      //     'icon-image': 'lodging-15',
+      //     'icon-allow-overlap': true,
+      //   }
+      // });
+
+
+
+      this.map.addSource('places', {
+        type: 'geojson',
+        data: stores
       });
+
+      this.load();
     });
 
-    // this.map.on('mousemove', (e) => {
-    //   const features = this.map.queryRenderedFeatures(e.point);
-    //   console.log("features", features);
-    // });
+
+
+
 
     // Add an event listener for when a user clicks on the map
     this.map.on('mousedown', (e) => {
+
+
       // Query all the rendered points in the view
       var features = this.map.queryRenderedFeatures(e.point, { layers: ['locations'] });
       //console.log("e", e);
@@ -338,12 +405,12 @@ class MyLayer extends React.Component {
       //const features = this.map.queryRenderedFeatures(e.point);
       // console.log("features", features);
       if (features.length) {
-        var clickedPoint = features[0];      
+        var clickedPoint = features[0];
 
-         // 1. Fly to the point
+        // 1. Fly to the point
         this.flyToMarker(lng, lat, 15);
         //console.log("clickedListing - index", element);
-        
+
         // Check if there is already a popup on the map and if so, remove it        
         if (this.state.popup) this.state.popup.remove();
 
@@ -369,6 +436,30 @@ class MyLayer extends React.Component {
         });
       }
     });
+
+
+    this.map.on('mousemove', (e) => {
+      const features = this.map.queryRenderedFeatures(e.point);
+      if (features[0] && features[0].layer && features[0].layer.layout
+        && features[0].layer.layout.hasOwnProperty('icon-image')) {
+
+        let s = Object.values(features[0].layer.layout);
+        console.log("s", s);
+        if (s && s.includes('lodging-15')) {
+          this.map.getCanvas().style.cursor = 'pointer';
+        }
+      }
+      else {
+        this.map.getCanvas().style.cursor = 'grab';
+      }
+    });
+
+
+
+
+
+
+
   }
 
   flyToMarker(lng, lat, zoom) {
@@ -376,7 +467,9 @@ class MyLayer extends React.Component {
       center: [lng, lat],
       zoom
     });
-  } 
+  }
+
+
 
   render() {
 
@@ -403,6 +496,7 @@ class MyLayer extends React.Component {
       });
     };
 
+
     const arr = stores.features.map((element, index) => {
       let currentFeature = element;
       //console.log("currentFeature", currentFeature);
@@ -417,6 +511,31 @@ class MyLayer extends React.Component {
         det += ' · ' + prop.phoneFormatted;
       }
 
+      //this.createMarker(element.geometry.coordinates[0], element.geometry.coordinates[1]);
+
+      //let markerContainer = document.createElement('div');
+      //     markerContainer.className = 'marker';
+      // console.log("element.geometry.coordinates", element.geometry.coordinates);  
+      //     let mark =new mapboxgl.Marker(markerContainer, { offset: [0, -23] })
+      //     .setLngLat(element.geometry.coordinates)
+      //     .addTo(this.map);
+
+
+
+
+      // const marker = ReactDOM.render(
+      //   <div className='marker'>
+      //     {/* <marker /> */}
+      //     <h1>Hello</h1>
+      //     {/* <img alt="marker" src={mapMarkerIcon} height="45px" width="25px" /> */}
+      //   </div>, markerContainer);
+
+      // new mapboxgl.Marker(marker, {
+      //   draggable: false,
+      // })
+      //   .setLngLat(element.geometry.coordinates)       
+      //   .addTo(this.map);
+
       return (
         <div key={index} className={this.state.active === 'listing-' + index ? 'item active' : 'item'} id={'listing-' + index}>
           <a tabIndex="0" className="title" onClick={() => LinkClick(element, index)}>{prop.address}</a>
@@ -425,8 +544,11 @@ class MyLayer extends React.Component {
       )
     })
 
+
+
+
     return (
-      <div id="body">       
+      <div id="body">
         <div ref={el => this.mapContainer = el} id='map' className='map pad2' />
         <div className='sidebar'>
           <div className='heading'>
