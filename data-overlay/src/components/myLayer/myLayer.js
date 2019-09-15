@@ -1,44 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
-import mapboxgl from 'mapbox-gl'
-import 'mapbox-gl/dist/mapbox-gl.css';
+import mapboxgl from 'mapbox-gl';
+//import 'mapbox-gl/dist/mapbox-gl.css';
 //import data from './data.json'
 import './myLayer.css';
-import mapMarkerIcon from './marker.png';
+//import mapMarkerIcon from './marker.png';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
-
-// const options = [{
-//   name: 'Population',
-//   description: 'Estimated total population',
-//   property: 'pop_est',
-//   stops: [
-//     [0, '#f8d5cc'],
-//     [1000000, '#f4bfb6'],
-//     [5000000, '#f1a8a5'],
-//     [10000000, '#ee8f9a'],
-//     [50000000, '#ec739b'],
-//     [100000000, '#dd5ca8'],
-//     [250000000, '#c44cc0'],
-//     [500000000, '#9f43d7'],
-//     [1000000000, '#6e40e6']
-//   ]
-// }, {
-//   name: 'GDP',
-//   description: 'Estimate total GDP in millions of dollars',
-//   property: 'gdp_md_est',
-//   stops: [
-//     [0, '#f8d5cc'],
-//     [1000, '#f4bfb6'],
-//     [5000, '#f1a8a5'],
-//     [10000, '#ee8f9a'],
-//     [50000, '#ec739b'],
-//     [100000, '#dd5ca8'],
-//     [250000, '#c44cc0'],
-//     [5000000, '#9f43d7'],
-//     [10000000, '#6e40e6']
-//   ]
-// }]
 
 const stores = {
   "type": "FeatureCollection",
@@ -287,65 +254,27 @@ class MyLayer extends React.Component {
   state = {
     active: null,
     popup: null
-  };
+  };  
 
-  //markerContainer;
-  //markerRef = null;
+  createMarker(index) {
+    var el = document.createElement('div');
 
-  // LinkClick;
-  // arr;
+    // Add a class called 'marker' to each div
+    el.className = 'marker';
 
-  createMarker(lng, lat) {
-    let popup = null;
-
-    const coordX = lng;
-    const coordY = lat;
-    //console.log("coordY", coordX, coordY);
-
-    const markerContainer = document.createElement('div');
-    const marker = ReactDOM.render(
-      <div className='mapboxgl-marker' onClick={(e) => console.log("marker", e)}>
-        {/* <marker /> */}
-        {/* <h1>Hello</h1> */}
-        <img alt="marker" src={mapMarkerIcon} height="45px" width="25px" />
-      </div>, markerContainer);
-
-    const image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMi0QnVvJROe-0oXg0a29J9mJLk2c9JMnuC3F893xeKMa2R_ou";
-    const name = 'Hotel Name'
-
-    popup = new mapboxgl.Popup()
-      .setLngLat([coordX, coordY])
-      .setHTML(
-        '<div>' +
-        '<h2 style="text-align: center">' + name + '</h2>' +
-        '<img alt="marker" + src="' + image + '" height="150px" width="auto" />'
-        + '</div>'
-      )
+    el.onclick= () => this.linkOrMarkerClick(stores.features[index], index);
+   
+    // By default the image for your custom marker will be anchored
+    // by its center. Adjust the position accordingly
+    // Create the custom markers, set their position, and add to map
+    new mapboxgl.Marker(el, { offset: [17, 0] })
+      .setLngLat(stores.features[index].geometry.coordinates)
       .addTo(this.map);
-
-    new mapboxgl.Marker(marker, {
-      draggable: false,
-    })
-      .setLngLat([coordX, coordY])
-      .setPopup(popup)
-      .addTo(this.map);
-
-    //markerRef.togglePopup();
-    //console.log("markerRef", markerRef);
-
-    //   this.marker = new MapboxGl.Marker({
-    //     draggable: this.props.draggable,
-    //     element: this.refs.wrapper
-    //   })
-    //     .setLngLat([this.props.coordinate.lon, this.props.coordinate.lat])
-    //     .addTo(map);
-
-
   }
 
-  load = () => {
-    const res = (stores.features.map((element) => {
-      this.createMarker(element.geometry.coordinates[0], element.geometry.coordinates[1]);
+  createAllMarkers = () => {
+    const res = (stores.features.map((element, index) => {
+      this.createMarker(index);
       return res;
     }))
   }
@@ -356,195 +285,68 @@ class MyLayer extends React.Component {
       style: 'mapbox://styles/mapbox/streets-v10',
       center: [-77.034084, 38.909671],
       zoom: 14
-    });
-
-    // const load = ()=>{
-    //   return(stores.features.map((element) => {
-    //   this.createMarker(element.geometry.coordinates[0], element.geometry.coordinates[1]);
-    // }))}
+    });    
 
     this.map.on('load', () => {
-
-      // Add the data to your map as a layer icon-hotel
-      // this.map.addLayer({
-      //   id: 'locations',
-      //   type: 'symbol',
-      //   // Add a GeoJSON source containing place coordinates and information.
-      //   source: {
-      //     type: 'geojson',
-      //     data: stores
-      //   },
-      //   layout: {
-      //     'icon-image': 'lodging-15',
-      //     'icon-allow-overlap': true,
-      //   }
-      // });
-
-
-
       this.map.addSource('places', {
         type: 'geojson',
         data: stores
       });
 
-      this.load();
+      this.createAllMarkers();
     });
-
-
-
-
-
-    // Add an event listener for when a user clicks on the map
-    this.map.on('mousedown', (e) => {
-
-
-      // Query all the rendered points in the view
-      var features = this.map.queryRenderedFeatures(e.point, { layers: ['locations'] });
-      //console.log("e", e);
-      const { lng, lat } = e.lngLat;
-      //const features = this.map.queryRenderedFeatures(e.point);
-      // console.log("features", features);
-      if (features.length) {
-        var clickedPoint = features[0];
-
-        // 1. Fly to the point
-        this.flyToMarker(lng, lat, 15);
-        //console.log("clickedListing - index", element);
-
-        // Check if there is already a popup on the map and if so, remove it        
-        if (this.state.popup) this.state.popup.remove();
-
-        let popup = new mapboxgl.Popup({ closeOnClick: false, offset: [14, 0] })
-          .setLngLat([lng, lat])
-          .setHTML('<h3>Sweetgreen</h3>' +
-            '<h4>' + clickedPoint.properties.address + '</h4>')
-          .addTo(this.map);
-
-        // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
-        var selectedFeature = clickedPoint.properties.address;
-        let selectedFeatureIndex = -1;
-        for (var i = 0; i < stores.features.length; i++) {
-          if (stores.features[i].properties.address === selectedFeature) {
-            selectedFeatureIndex = i;
-          }
-        }
-
-        //3. Highlight listing in sidebar (and remove highlight for all other listings)
-        this.setState({
-          popup,
-          active: "listing-" + selectedFeatureIndex
-        });
-      }
-    });
-
-
-    this.map.on('mousemove', (e) => {
-      const features = this.map.queryRenderedFeatures(e.point);
-      if (features[0] && features[0].layer && features[0].layer.layout
-        && features[0].layer.layout.hasOwnProperty('icon-image')) {
-
-        let s = Object.values(features[0].layer.layout);
-        console.log("s", s);
-        if (s && s.includes('lodging-15')) {
-          this.map.getCanvas().style.cursor = 'pointer';
-        }
-      }
-      else {
-        this.map.getCanvas().style.cursor = 'grab';
-      }
-    });
-
-
-
-
-
-
-
   }
 
-  flyToMarker(lng, lat, zoom) {
+  flyToMarker(center, zoom) {
     this.map.flyTo({
-      center: [lng, lat],
+      center,
       zoom
     });
   }
 
+   linkOrMarkerClick = (element, index) => {
 
+    // 1. Fly to the point associated with the clicked link
+    this.flyToMarker(element.geometry.coordinates, 15);
 
-  render() {
+    // 2. Close all other popups and display popup for clicked store
+    // Check if there is already a popup on the map and if so, remove it
+    if (this.state.popup) this.state.popup.remove();
 
-    // Update the currentFeature to the store associated with the clicked link  
-    const LinkClick = (element, index) => {
+    const popup = new mapboxgl.Popup({ closeOnClick: false, offset: [17, 0] })
+      .setLngLat(element.geometry.coordinates)
+      .setHTML('<h3>Sweetgreen</h3>' +
+        '<h4>' + element.properties.address + '</h4>')
+      .addTo(this.map);
 
-      // 1. Fly to the point associated with the clicked link
-      this.flyToMarker(element.geometry.coordinates[0], element.geometry.coordinates[1], 15);
+    // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+    this.setState({
+      popup,
+      active: "listing-" + index
+    });
+  };
 
-      // 2. Close all other popups and display popup for clicked store
-      // Check if there is already a popup on the map and if so, remove it
-      if (this.state.popup) this.state.popup.remove();
-
-      const popup = new mapboxgl.Popup({ closeOnClick: false, offset: [17, 0] })
-        .setLngLat(element.geometry.coordinates)
-        .setHTML('<h3>Sweetgreen</h3>' +
-          '<h4>' + element.properties.address + '</h4>')
-        .addTo(this.map);
-
-      // 3. Highlight listing in sidebar (and remove highlight for all other listings)
-      this.setState({
-        popup,
-        active: "listing-" + index
-      });
-    };
-
+  render() { 
 
     const arr = stores.features.map((element, index) => {
       let currentFeature = element;
-      //console.log("currentFeature", currentFeature);
+     
       // Shorten data.feature.properties to `prop` so we're not
       // writing this long form over and over again.
-      let prop = currentFeature.properties;
-      // console.log("prop", prop);
-      // console.log("index", index);     
+      let prop = currentFeature.properties;       
 
       let det = prop.city;
       if (prop.phone) {
         det += ' · ' + prop.phoneFormatted;
       }
 
-      //this.createMarker(element.geometry.coordinates[0], element.geometry.coordinates[1]);
-
-      //let markerContainer = document.createElement('div');
-      //     markerContainer.className = 'marker';
-      // console.log("element.geometry.coordinates", element.geometry.coordinates);  
-      //     let mark =new mapboxgl.Marker(markerContainer, { offset: [0, -23] })
-      //     .setLngLat(element.geometry.coordinates)
-      //     .addTo(this.map);
-
-
-
-
-      // const marker = ReactDOM.render(
-      //   <div className='marker'>
-      //     {/* <marker /> */}
-      //     <h1>Hello</h1>
-      //     {/* <img alt="marker" src={mapMarkerIcon} height="45px" width="25px" /> */}
-      //   </div>, markerContainer);
-
-      // new mapboxgl.Marker(marker, {
-      //   draggable: false,
-      // })
-      //   .setLngLat(element.geometry.coordinates)       
-      //   .addTo(this.map);
-
       return (
         <div key={index} className={this.state.active === 'listing-' + index ? 'item active' : 'item'} id={'listing-' + index}>
-          <a tabIndex="0" className="title" onClick={() => LinkClick(element, index)}>{prop.address}</a>
+          <a tabIndex="0" className="title" onClick={() => this.linkOrMarkerClick(element, index)}>{prop.address}</a>
           <div>{det}</div>
         </div>
       )
     })
-
-
 
 
     return (
