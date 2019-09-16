@@ -387,7 +387,7 @@ class MyLayer extends React.Component {
     // 2. Close all other popups and display popup for clicked store
     // Check if there is already a popup on the map and if so, remove it
     if (this.state.popup) this.state.popup.remove();
-// {this.setStars(prop.rate)}
+
     const descript =
       '<h3 >' + element.properties.name + '</h2>' +
       '<img alt="marker" + src="' + element.properties.image + '" />' +
